@@ -15,6 +15,7 @@ interface NetworkRepository{
     @Inject constructor(private val networkHandler: NetworkHandler,
                         private val service: NetworkAPIService)
 
+
 }
 
 
