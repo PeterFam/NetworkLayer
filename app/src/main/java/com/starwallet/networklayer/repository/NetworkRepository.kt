@@ -5,17 +5,32 @@ import com.starwallet.networklayer.data.remote.Either
 import com.starwallet.networklayer.data.remote.Failure
 import com.starwallet.networklayer.data.remote.NetworkAPIService
 import com.starwallet.networklayer.data.remote.NetworkHandler
+import retrofit2.Call
 import javax.inject.Inject
 
-interface NetworkRepository{
+interface NetworkRepository {
     //Here will put all requests needed
     fun movies(): Either<Failure, List<Movies>>
 
     class Network
-    @Inject constructor(private val networkHandler: NetworkHandler,
-                        private val service: NetworkAPIService)
+    @Inject constructor(
+        private val networkHandler: NetworkHandler,
+        private val service: NetworkAPIService
+    )
 
 
+    //this request is called when ever need to make a network call
+    private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
+        return try {
+            val response = call.execute()
+            when (response.isSuccessful) {
+                true -> Either.Right(transform(response.body() ?: default))
+                false -> Either.Left(Failure.ServerError)
+            }
+        } catch (exception: Throwable) {
+            Either.Left(Failure.ServerError)
+        }
+    }
 }
 
 
