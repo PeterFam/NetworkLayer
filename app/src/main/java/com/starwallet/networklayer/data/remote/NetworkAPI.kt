@@ -13,7 +13,7 @@ internal interface NetworkAPI {
     @GET("")
     fun getMoviesDetails(): Call<AppResponses>
 
-    @GET("")
+    @GET("oauth/token")
     fun loginRequest(): Call<AppResponses>
 
 }
