@@ -1,5 +1,6 @@
 package com.starwallet.networklayer.repository
 
+import com.starwallet.networklayer.data.model.AppResponses
 import com.starwallet.networklayer.data.model.Movies
 import com.starwallet.networklayer.data.remote.Either
 import com.starwallet.networklayer.data.remote.Failure
@@ -23,8 +24,8 @@ interface NetworkRepository {
 
         override fun loginRquest(): Either<Failure, LoginResponse> {
             return when (networkHandler.isConnected) {
-                true -> request(service.loginRequest()
-                //false, null ->
+                true -> request(service.loginRequest(), {it.body}, AppResponses.empty())
+                false, null -> Either.Left(Failure.NetworkConnection)
             }
         }
         //this request is called when ever need to make a network call

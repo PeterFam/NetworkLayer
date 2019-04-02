@@ -13,7 +13,7 @@ class LoginUseCase
                     private val scope: CoroutineScope)
     : UseCase<LoginResponse, UseCase.None>(scope) {
 
-    override suspend fun run(params: None): Either<Failure, LoginResponse> {
+    override suspend fun run(params: None): Either<Failure, LoginResponse> =
         networkWorkRepository.loginRquest()
-    }
+
 }
