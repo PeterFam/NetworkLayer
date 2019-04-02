@@ -18,4 +18,6 @@ abstract class UseCase<out Type, in Params>(private val scope: CoroutineScope) w
            onResult(run(params))
        }
     }
+
+    class None
 }

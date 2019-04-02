@@ -5,32 +5,43 @@ import com.starwallet.networklayer.data.remote.Either
 import com.starwallet.networklayer.data.remote.Failure
 import com.starwallet.networklayer.data.remote.NetworkAPIService
 import com.starwallet.networklayer.data.remote.NetworkHandler
+import com.starwallet.networklayer.ui.login.LoginResponse
 import retrofit2.Call
 import javax.inject.Inject
 
 interface NetworkRepository {
     //Here will put all requests needed
-    fun movies(): Either<Failure, List<Movies>>
+
+    fun loginRquest(): Either<Failure, LoginResponse>
 
     class Network
     @Inject constructor(
         private val networkHandler: NetworkHandler,
         private val service: NetworkAPIService
-    )
 
+    ) : NetworkRepository {
 
-    //this request is called when ever need to make a network call
-    private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
-        return try {
-            val response = call.execute()
-            when (response.isSuccessful) {
-                true -> Either.Right(transform(response.body() ?: default))
-                false -> Either.Left(Failure.ServerError)
+        override fun loginRquest(): Either<Failure, LoginResponse> {
+            return when (networkHandler.isConnected) {
+                true -> request(service.loginRequest()
+                //false, null ->
             }
-        } catch (exception: Throwable) {
-            Either.Left(Failure.ServerError)
+        }
+        //this request is called when ever need to make a network call
+        private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
+            return try {
+                val response = call.execute()
+                when (response.isSuccessful) {
+                    true -> Either.Right(transform(response.body() ?: default))
+                    false -> Either.Left(Failure.ServerError)
+                }
+            } catch (exception: Throwable) {
+                Either.Left(Failure.ServerError)
+            }
         }
     }
+
+
 }
 
 

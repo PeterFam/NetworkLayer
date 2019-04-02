@@ -1,8 +1,9 @@
-package com.starwallet.networklayer.data.remote
+package com.starwallet.networklayer.di.module
 
 import android.app.Application
 import android.content.Context
 import com.starwallet.networklayer.BuildConfig
+import com.starwallet.networklayer.data.remote.SettingsAPI
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

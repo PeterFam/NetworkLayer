@@ -2,13 +2,16 @@ package com.starwallet.networklayer.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.starwallet.networklayer.ui.BaseViewModel
+import javax.inject.Inject
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel
+    @Inject constructor(): ViewModel() {
 
-    public var emailError: MutableLiveData<Boolean> = MutableLiveData()
+    var emailError: MutableLiveData<Boolean> = MutableLiveData()
 
-    private var passwordError: MutableLiveData<Boolean> = MutableLiveData()
+    var passwordError: MutableLiveData<Boolean> = MutableLiveData()
 
     fun validateData(email: String, password: String) {
 
@@ -17,18 +20,15 @@ class LoginViewModel : BaseViewModel() {
         passwordError.value = password.isEmpty()
 
         if (emailError.value != true
-            && passwordError.value != true
-        ) {
+            && passwordError.value != true)
             loginRequest()
-        }
-    }
 
+    }
     private fun loginRequest() {
 
     }
 
-    public fun getEmailError() : LiveData<Boolean>{
-        return emailError
-    }
+    fun onEmailError() : LiveData<Boolean> =  emailError
+
 
 }

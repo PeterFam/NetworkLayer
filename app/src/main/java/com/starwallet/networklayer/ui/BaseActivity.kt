@@ -9,11 +9,11 @@ import com.starwallet.networklayer.helpers.LoadingProgress
 import javax.inject.Inject
 
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity(){
+abstract class BaseActivity : AppCompatActivity(){
 
-//    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-//        (application as AndroidApplication).appComponent
-//    }
+    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
+        (this.application as AndroidApplication).appComponent
+    }
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 

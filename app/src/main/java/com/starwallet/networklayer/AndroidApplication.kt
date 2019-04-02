@@ -1,25 +1,25 @@
 package com.starwallet.networklayer
 
 import android.app.Application
-import com.starwallet.networklayer.data.remote.NetworkModule
 import com.starwallet.networklayer.di.ApplicationComponent
 import com.starwallet.networklayer.di.DaggerApplicationComponent
 
 class AndroidApplication : Application() {
 
-    companion object {
-         lateinit var applicationComponent: ApplicationComponent
-    }
 
+    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
+        DaggerApplicationComponent
+            .builder()
+            .build()
+
+}
 
     override fun onCreate() {
         super.onCreate()
+        injectMembers()
 
-        applicationComponent = DaggerApplicationComponent.builder()
-            .build()
-
-        applicationComponent.inject(this)
     }
 
+    private fun injectMembers() = appComponent.inject(this)
 
 }
