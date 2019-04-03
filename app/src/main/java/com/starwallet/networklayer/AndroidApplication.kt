@@ -10,9 +10,7 @@ class AndroidApplication : Application() {
     val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
         DaggerApplicationComponent
             .builder()
-            .build()
-
-}
+            .build() }
 
     override fun onCreate() {
         super.onCreate()

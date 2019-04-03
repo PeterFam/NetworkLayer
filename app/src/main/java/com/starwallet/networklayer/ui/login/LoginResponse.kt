@@ -1,6 +1,7 @@
 package com.starwallet.networklayer.ui.login
 
 import com.google.gson.annotations.SerializedName
+import com.starwallet.networklayer.data.model.AppResponses
 
 data class LoginResponse (
     @field:SerializedName("token_type")
