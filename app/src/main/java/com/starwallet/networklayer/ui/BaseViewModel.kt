@@ -14,15 +14,12 @@ abstract class BaseViewModel : ViewModel() {
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
-        val scope = CoroutineScope(coroutineContext)
+
+    val scope = CoroutineScope(coroutineContext)
 
     var failure: MutableLiveData<Failure> = MutableLiveData()
 
     var loadingProgress: MutableLiveData<Boolean> = MutableLiveData()
-
-    protected fun handleFailure(failure: Failure) {
-        this.failure.value = failure
-    }
 
     fun onLoadingProgress(show: Boolean) : LiveData<Boolean> = loadingProgress
 
@@ -30,5 +27,10 @@ abstract class BaseViewModel : ViewModel() {
         super.onCleared()
         parentJob.cancel()
     }
+
+    protected fun handleFailure(failure: Failure) {
+        this.failure.value = failure
+    }
+
 
 }

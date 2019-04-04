@@ -4,7 +4,6 @@ import com.starwallet.networklayer.data.remote.Either
 import com.starwallet.networklayer.data.remote.Failure
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
-import javax.inject.Inject
 
 
 abstract class UseCase<out Type, in Params>
@@ -15,12 +14,11 @@ abstract class UseCase<out Type, in Params>
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
     operator fun invoke(params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) = {
-        coroutiesScope().async {
-           onResult(run(params))
-       }
+//        coroutiesScope().async {
+//           onResult(run(params))
+//       }
     }
 
     class None
 
-    abstract fun coroutiesScope(): CoroutineScope
 }

@@ -24,4 +24,6 @@ abstract class BaseActivity : AppCompatActivity(), LifecycleOwner{
 
     protected fun dismissProgress() = loadingProgress.dismissAllowingStateLoss()
 
+
 }
+

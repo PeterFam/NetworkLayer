@@ -2,7 +2,6 @@ package com.starwallet.networklayer.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.starwallet.networklayer.data.model.AppResponses
 import com.starwallet.networklayer.data.remote.request.LoginRequest
 import com.starwallet.networklayer.ui.BaseViewModel
@@ -32,7 +31,6 @@ class LoginViewModel
     }
 
     private  fun loginRequest(loginRequest: LoginRequest) {
-        loginUseCase.coroutiesScope()
         loginUseCase(LoginUseCase.Params(loginRequest)) {
             it.either(::handleFailure, ::handleLoginResponse)
         }

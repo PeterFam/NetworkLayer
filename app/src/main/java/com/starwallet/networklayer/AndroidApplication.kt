@@ -3,13 +3,14 @@ package com.starwallet.networklayer
 import android.app.Application
 import com.starwallet.networklayer.di.ApplicationComponent
 import com.starwallet.networklayer.di.DaggerApplicationComponent
+import com.starwallet.networklayer.di.module.NetworkModule
 
 class AndroidApplication : Application() {
-
 
     val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
         DaggerApplicationComponent
             .builder()
+            .networkModule(NetworkModule(this))
             .build() }
 
     override fun onCreate() {

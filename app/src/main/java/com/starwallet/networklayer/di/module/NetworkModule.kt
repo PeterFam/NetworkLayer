@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.starwallet.networklayer.BuildConfig
 import com.starwallet.networklayer.data.remote.SettingsAPI
+import com.starwallet.networklayer.repository.NetworkRepository
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,5 +35,7 @@ class NetworkModule (private val application: Application){
         }
         return okHttpClientBuilder.build()
     }
+
+    @Provides @Singleton fun provideNetworkModule(dataSource: NetworkRepository.Network): NetworkRepository = dataSource
 
 }
