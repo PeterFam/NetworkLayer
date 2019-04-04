@@ -11,9 +11,9 @@ import javax.inject.Inject
 
 class LoginUseCase
 @Inject
-constructor(private val networkWorkRepository: NetworkRepository)
+constructor(private val networkWorkRepository: NetworkRepository, scope: CoroutineScope)
 
-    : UseCase<AppResponses, LoginUseCase.Params>() {
+    : UseCase<AppResponses, LoginUseCase.Params>(scope) {
 
     override suspend fun run(params: Params): Either<Failure, AppResponses> =
         networkWorkRepository.loginRquest(params.loginRequest)

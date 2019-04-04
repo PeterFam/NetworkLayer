@@ -10,7 +10,7 @@ import com.starwallet.networklayer.helpers.LoadingProgress
 import javax.inject.Inject
 
 @SuppressLint("Registered")
-abstract class BaseActivity : AppCompatActivity(), LifecycleOwner{
+abstract class BaseActivity : AppCompatActivity(){
 
     val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
         (this.application as AndroidApplication).appComponent

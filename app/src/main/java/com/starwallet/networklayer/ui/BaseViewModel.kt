@@ -4,18 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.starwallet.networklayer.data.remote.Failure
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
+
 
 abstract class BaseViewModel : ViewModel() {
-
-    private var parentJob = Job()
-    private val coroutineContext: CoroutineContext
-        get() = parentJob + Dispatchers.Main
-
-    val scope = CoroutineScope(coroutineContext)
 
     var failure: MutableLiveData<Failure> = MutableLiveData()
 
@@ -25,10 +16,11 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        parentJob.cancel()
+       // parentJob.cancel()
     }
 
     protected fun handleFailure(failure: Failure) {
+        loadingProgress.value = false
         this.failure.value = failure
     }
 

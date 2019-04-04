@@ -31,7 +31,7 @@ class LoadingProgress : DialogFragment() {
     }
 
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         if(!this.isAdded)
             super.show(manager, tag)
     }

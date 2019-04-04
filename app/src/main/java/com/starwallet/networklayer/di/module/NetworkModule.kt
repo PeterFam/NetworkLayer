@@ -7,14 +7,23 @@ import com.starwallet.networklayer.data.remote.SettingsAPI
 import com.starwallet.networklayer.repository.NetworkRepository
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Module
 class NetworkModule (private val application: Application){
+
+    private var parentJob = Job()
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Main
+
 
     @Provides @Singleton fun providesApplicationContext(): Context = application
 
@@ -37,5 +46,7 @@ class NetworkModule (private val application: Application){
     }
 
     @Provides @Singleton fun provideNetworkModule(dataSource: NetworkRepository.Network): NetworkRepository = dataSource
+
+    @Provides @Singleton fun providesSingletonScope(): CoroutineScope = CoroutineScope(coroutineContext)
 
 }
