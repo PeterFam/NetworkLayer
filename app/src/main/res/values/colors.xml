@@ -7,5 +7,5 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="blue">#2C3ED1</color>
-    <color name="progress_transparent">#57FFFFFF</color>
+    <color name="progress_transparent">#00FFFFFF</color>
 </resources>

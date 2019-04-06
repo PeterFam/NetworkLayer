@@ -33,7 +33,8 @@ class LoginViewModel
     private  fun loginRequest(loginRequest: LoginRequest) {
         loadingProgress.value = true
         loginUseCase(LoginUseCase.Params(loginRequest)) {
-            it.either(::handleFailure, ::handleLoginResponse)
+            it.either(::handleFailure,
+                ::handleLoginResponse)
         }
     }
 

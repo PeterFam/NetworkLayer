@@ -1,6 +1,8 @@
 package com.starwallet.networklayer.helpers
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +26,13 @@ class LoadingProgress : DialogFragment() {
         dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
+
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return Dialog(activity, R.style.FullHeightDialog)
-    }
+//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+//        return Dialog(activity, R.style.FullHeightDialog)
+//    }
 
 
     override fun show(manager: FragmentManager, tag: String?) {
