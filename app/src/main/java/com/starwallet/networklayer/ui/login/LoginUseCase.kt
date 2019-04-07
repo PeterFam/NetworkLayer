@@ -14,7 +14,7 @@ class LoginUseCase
 constructor(private val networkWorkRepository: NetworkRepository, scope: CoroutineScope)
     : UseCase<AppResponses, LoginUseCase.Params>(scope) {
 
-    override  fun run(params: Params) =
+    override suspend fun run(params: Params) =
         networkWorkRepository.loginRquest(params.loginRequest)
 
     data class Params(val loginRequest: LoginRequest)
