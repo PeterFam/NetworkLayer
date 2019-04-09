@@ -1,11 +1,13 @@
 package com.starwallet.networklayer.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.starwallet.networklayer.R
+import com.starwallet.networklayer.data.model.AppResponses
 import com.starwallet.networklayer.data.remote.Failure
 import com.starwallet.networklayer.helpers.extention.failure
 import com.starwallet.networklayer.helpers.extention.observe
@@ -29,6 +31,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
         loginViewModel = viewModel(viewModelFactory) {
+            observe(loginResponse, ::onLoginResponse)
             observe(emailError, ::onErrorEmail)
             observe(passwordError, ::onErrorPassword)
             observe(loadingProgress, ::onLoading)
@@ -36,6 +39,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
 
         submitBtn.setOnClickListener(this)
+    }
+
+    private fun onLoginResponse(appResponses: AppResponses?) {
+        Log.d("Logiiiiin", appResponses.toString())
     }
 
     private fun onLoading(show: Boolean?) {
