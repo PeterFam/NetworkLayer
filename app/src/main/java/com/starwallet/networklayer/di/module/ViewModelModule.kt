@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.starwallet.networklayer.di.scope.ViewModelFactory
 import com.starwallet.networklayer.di.scope.ViewModelKey
 import com.starwallet.networklayer.ui.login.LoginViewModel
+import com.starwallet.networklayer.ui.movies.MoviesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,5 +19,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     abstract fun bindsLoginViewModle(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MoviesViewModel::class)
+    abstract fun bindsMoviesViewModel(moviesViewModel: MoviesViewModel): ViewModel
 
 }

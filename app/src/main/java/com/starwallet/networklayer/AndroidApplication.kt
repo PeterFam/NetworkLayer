@@ -4,6 +4,7 @@ import android.app.Application
 import com.starwallet.networklayer.di.ApplicationComponent
 import com.starwallet.networklayer.di.DaggerApplicationComponent
 import com.starwallet.networklayer.di.module.NetworkModule
+import com.starwallet.networklayer.di.module.UseCaseModule
 
 class AndroidApplication : Application() {
 
@@ -11,6 +12,7 @@ class AndroidApplication : Application() {
         DaggerApplicationComponent
             .builder()
             .networkModule(NetworkModule(this))
+            .useCaseModule(UseCaseModule())
             .build() }
 
     override fun onCreate() {

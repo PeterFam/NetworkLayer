@@ -1,13 +1,12 @@
 package com.starwallet.networklayer.repository
 
 import com.starwallet.networklayer.data.model.AppResponses
-import com.starwallet.networklayer.data.model.Movies
 import com.starwallet.networklayer.data.remote.Either
 import com.starwallet.networklayer.data.remote.Failure
 import com.starwallet.networklayer.data.remote.NetworkAPIService
 import com.starwallet.networklayer.data.remote.NetworkHandler
 import com.starwallet.networklayer.data.remote.request.LoginRequest
-import com.starwallet.networklayer.ui.login.LoginResponse
+import com.starwallet.networklayer.ui.movies.Movie
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -17,12 +16,20 @@ interface NetworkRepository {
     fun loginRquest(loginRequest: LoginRequest)
             : Either<Failure, AppResponses>
 
+    fun movies() : Either<Failure, List<Movie>>
     class Network
     @Inject constructor(
         private val networkHandler: NetworkHandler,
         private val service: NetworkAPIService
 
     ) : NetworkRepository {
+        override fun movies(): Either<Failure, List<Movie>> {
+            return when (networkHandler.isConnected) {
+                true -> request(service.movies(), { it.map { it.toMovie() } }, emptyList())
+                false, null -> Either.Left(Failure.NetworkConnection)
+            }
+        }
+
         override fun loginRquest(loginRequest: LoginRequest)
                 : Either<Failure, AppResponses> {
 

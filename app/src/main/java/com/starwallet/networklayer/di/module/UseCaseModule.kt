@@ -21,7 +21,7 @@ class UseCaseModule {
         private val job = Job()
 
         override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.IO
+        get() = job + Dispatchers.Default
 
     }
 
