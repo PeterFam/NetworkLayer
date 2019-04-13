@@ -13,16 +13,17 @@ import javax.inject.Inject
 interface NetworkRepository {
     //Here will put all requests needed
 
+    fun movies() : Either<Failure, List<Movie>>
+
     fun loginRquest(loginRequest: LoginRequest)
             : Either<Failure, AppResponses>
 
-    fun movies() : Either<Failure, List<Movie>>
+
     class Network
     @Inject constructor(
         private val networkHandler: NetworkHandler,
-        private val service: NetworkAPIService
+        private val service: NetworkAPIService) : NetworkRepository {
 
-    ) : NetworkRepository {
         override fun movies(): Either<Failure, List<Movie>> {
             return when (networkHandler.isConnected) {
                 true -> request(service.movies(), { it.map { it.toMovie() } }, emptyList())
@@ -43,9 +44,12 @@ interface NetworkRepository {
         private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
             return try {
                 val response = call.execute()
-                when (response.isSuccessful) {
-                    true -> Either.Right(transform(response.body() ?: default))
-                    false -> Either.Left(Failure.ServerError)
+                when (response.code()) {
+                    200 -> Either.Right(transform(response.body() ?: default))
+                    401 -> Either.Left(Failure.Unauthorizes)
+                    400 -> Either.Left(Failure.ServerError)
+                    else -> Either.Left(Failure.NetworkConnection)
+
                 }
             } catch (exception: Throwable) {
                 Either.Left(Failure.ServerError)

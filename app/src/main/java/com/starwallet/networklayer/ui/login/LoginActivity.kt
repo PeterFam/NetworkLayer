@@ -76,6 +76,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             is Failure.ServerError -> {
                 showSnackBar("Server Error")
             }
+            is Failure.Unauthorizes ->{
+                showSnackBar("Unauthorized User")
+            }
         }
     }
 

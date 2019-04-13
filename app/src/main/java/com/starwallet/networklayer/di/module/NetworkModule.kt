@@ -2,6 +2,8 @@ package com.starwallet.networklayer.di.module
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import com.starwallet.networklayer.BuildConfig
 import com.starwallet.networklayer.repository.NetworkRepository
 import dagger.Module
@@ -17,22 +19,30 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Module
-class NetworkModule (private val application: Application){
+class NetworkModule(private val application: Application) {
 
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
 
 
-    @Provides @Singleton fun providesApplicationContext(): Context = application
+    @Provides
+    @Singleton
+    fun providesApplicationContext(): Context = application
 
-    @Provides @Singleton fun providesRetrofit(): Retrofit {
-
+    @Provides
+    @Singleton
+    fun providesRetrofit(): Retrofit {
+        Log.d(
+            "Urlll",
+            BuildConfig.BASE_URL
+        )
         return Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture-Kotlin/")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(createClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
     }
 
     private fun createClient(): OkHttpClient {
@@ -44,8 +54,12 @@ class NetworkModule (private val application: Application){
         return okHttpClientBuilder.build()
     }
 
-    @Provides @Singleton fun provideNetworkModule(dataSource: NetworkRepository.Network): NetworkRepository = dataSource
+    @Provides
+    @Singleton
+    fun provideNetworkModule(dataSource: NetworkRepository.Network): NetworkRepository = dataSource
 
-    @Provides @Singleton fun providesSingletonScope(): CoroutineScope = CoroutineScope(coroutineContext)
+    @Provides
+    @Singleton
+    fun providesSingletonScope(): CoroutineScope = CoroutineScope(coroutineContext)
 
 }

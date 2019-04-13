@@ -12,7 +12,6 @@ class AndroidApplication : Application() {
         DaggerApplicationComponent
             .builder()
             .networkModule(NetworkModule(this))
-            .useCaseModule(UseCaseModule())
             .build() }
 
     override fun onCreate() {

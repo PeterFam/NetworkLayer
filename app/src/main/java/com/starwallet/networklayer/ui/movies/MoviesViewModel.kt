@@ -1,5 +1,6 @@
 package com.starwallet.networklayer.ui.movies
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.starwallet.networklayer.repository.UseCase
 import com.starwallet.networklayer.ui.BaseViewModel
