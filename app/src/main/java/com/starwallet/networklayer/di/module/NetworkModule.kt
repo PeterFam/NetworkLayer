@@ -3,7 +3,6 @@ package com.starwallet.networklayer.di.module
 import android.app.Application
 import android.content.Context
 import com.starwallet.networklayer.BuildConfig
-import com.starwallet.networklayer.data.remote.SettingsAPI
 import com.starwallet.networklayer.repository.NetworkRepository
 import dagger.Module
 import dagger.Provides
@@ -30,7 +29,7 @@ class NetworkModule (private val application: Application){
     @Provides @Singleton fun providesRetrofit(): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl(SettingsAPI.baseUrl)
+            .baseUrl("https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture-Kotlin/")
             .client(createClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
